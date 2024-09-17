@@ -1,13 +1,12 @@
 #include <iostream>
-#include <vector>
 #include <ctime>
 #include <cstdlib>
 
 using namespace std;
 
-void printMatrix(const vector<vector<int>>& matrix) {
-    for (int i = 0; i < matrix.size(); i++) {
-        for (int j = 0; j < matrix[i].size(); j++) {
+void printMatrix(int** matrix, int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
             cout << matrix[i][j] << "\t";
         }
         cout << endl;
@@ -15,10 +14,10 @@ void printMatrix(const vector<vector<int>>& matrix) {
     cout << endl;
 }
 
-int scalarProduct(const vector<int>& vec1, const vector<int>& vec2) {
+int scalarProduct(int* row1, int* row2, int cols) {
     int product = 0;
-    for (int i = 0; i < vec1.size(); i++) {
-        product += vec1[i] * vec2[i];
+    for (int i = 0; i < cols; i++) {
+        product += row1[i] * row2[i];
     }
     return product;
 }
@@ -32,7 +31,13 @@ int main() {
     cout << "Кількість стовпців: ";
     cin >> cols;
 
-    vector<vector<int>> matrix(rows, vector<int>(cols));
+    // Виділення пам'яті для динамічного двовимірного масиву
+    int** matrix = new int*[rows];
+    for (int i = 0; i < rows; i++) {
+        matrix[i] = new int[cols];
+    }
+
+    // Заповнення матриці випадковими числами
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             matrix[i][j] = rand() % 10;
@@ -40,15 +45,22 @@ int main() {
     }
 
     cout << "Матриця:" << endl;
-    printMatrix(matrix);
+    printMatrix(matrix, rows, cols);
 
-    vector<int> firstRow = matrix[0];
+    int* firstRow = matrix[0];
 
     cout << "Добуток першого рядка з іншими рядками:" << endl;
     for (int i = 1; i < rows; i++) {
-        int product = scalarProduct(firstRow, matrix[i]);
+        int product = scalarProduct(firstRow, matrix[i], cols);
         cout << "Скалярний добуток першого рядка з рядком " << i + 1 << ": " << product << endl;
     }
 
+    // Звільнення пам'яті
+    for (int i = 0; i < rows; i++) {
+        delete[] matrix[i];
+    }
+    delete[] matrix;
+
     return 0;
 }
+
