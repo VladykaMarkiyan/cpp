@@ -31,13 +31,11 @@ int main() {
     cout << "Кількість стовпців: ";
     cin >> cols;
 
-    // Виділення пам'яті для динамічного двовимірного масиву
     int** matrix = new int*[rows];
     for (int i = 0; i < rows; i++) {
         matrix[i] = new int[cols];
     }
 
-    // Заповнення матриці випадковими числами
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             matrix[i][j] = rand() % 10;
@@ -55,7 +53,6 @@ int main() {
         cout << "Скалярний добуток першого рядка з рядком " << i + 1 << ": " << product << endl;
     }
 
-    // Звільнення пам'яті
     for (int i = 0; i < rows; i++) {
         delete[] matrix[i];
     }
