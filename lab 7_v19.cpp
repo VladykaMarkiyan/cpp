@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 
-#define N 10  // Розмір масиву
+#define N 10 
 
 int main() {
     double array[N];
