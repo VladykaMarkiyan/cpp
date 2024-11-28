@@ -1,17 +1,14 @@
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
-void swapFirstLastRows(vector<vector<int>>& matrix) {
-    int n = matrix.size();
+void swapFirstLastRows(int matrix[][100], int n) {
     for (int i = 0; i < n; i++) {
-        swap(matrix[0][i], matrix[n-1][i]);
+        swap(matrix[0][i], matrix[n - 1][i]);
     }
 }
 
-int productOfDiagonal(const vector<vector<int>>& matrix) {
-    int n = matrix.size();
+int productOfDiagonal(int matrix[][100], int n) {
     int product = 1;
     for (int i = 0; i < n; i++) {
         product *= matrix[i][i];
@@ -21,11 +18,11 @@ int productOfDiagonal(const vector<vector<int>>& matrix) {
 
 int main() {
     int n;
-    
+
     cout << "Введіть розмір квадратної матриці: ";
     cin >> n;
 
-    vector<vector<int>> matrix(n, vector<int>(n));
+    int matrix[100][100]; // Статичний масив
 
     cout << "Введіть елементи матриці:" << endl;
     for (int i = 0; i < n; i++) {
@@ -42,7 +39,7 @@ int main() {
         cout << endl;
     }
 
-    swapFirstLastRows(matrix);
+    swapFirstLastRows(matrix, n);
 
     cout << "Матриця після зміни першого і останнього рядків:" << endl;
     for (int i = 0; i < n; i++) {
@@ -52,7 +49,7 @@ int main() {
         cout << endl;
     }
 
-    int product = productOfDiagonal(matrix);
+    int product = productOfDiagonal(matrix, n);
     cout << "Добуток елементів головної діагоналі: " << product << endl;
 
     return 0;
