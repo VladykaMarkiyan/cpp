@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
 #include <iomanip>
 
@@ -9,7 +8,7 @@ struct Student {
     std::string group;
     int absences;
 
-    Student(std::string n, std::string f, std::string g, int a)
+    Student(std::string n = "", std::string f = "", std::string g = "", int a = 0)
         : name(n), faculty(f), group(g), absences(a) {}
 };
 
@@ -18,8 +17,10 @@ bool compareAbsences(const Student &a, const Student &b) {
 }
 
 int main() {
-    std::vector<Student> students;
+    const int MAX_STUDENTS = 100; 
+    Student students[MAX_STUDENTS]; 
     int numStudents;
+
     do {
         std::cout << "Введіть кількість студентів (мінімум 10): ";
         std::cin >> numStudents;
@@ -35,7 +36,7 @@ int main() {
 
         std::cout << "Студент #" << (i + 1) << ":\n";
         std::cout << "Введіть ПІБ: ";
-        std::cin.ignore();
+        std::cin.ignore(); 
         std::getline(std::cin, name);
         std::cout << "Введіть факультет: ";
         std::getline(std::cin, faculty);
@@ -44,13 +45,13 @@ int main() {
         std::cout << "Введіть кількість пропусків: ";
         std::cin >> absences;
 
-        students.emplace_back(name, faculty, group, absences);
+        students[i] = Student(name, faculty, group, absences);
     }
 
-    std::sort(students.begin(), students.end(), compareAbsences);
-    std::cout << "\nТоп-10 студентів з найбільшою кількістю пропусків:\n";
+    std::sort(students, students + numStudents, compareAbsences);
 
-    for (int i = 0; i < 10 && i < students.size(); ++i) {
+    std::cout << "\nТоп-10 студентів з найбільшою кількістю пропусків:\n";
+    for (int i = 0; i < 10 && i < numStudents; ++i) {
         std::cout << students[i].name << " (Факультет: " << students[i].faculty 
                   << ", Група: " << students[i].group 
                   << ", Пропуски: " << students[i].absences << ")\n";
